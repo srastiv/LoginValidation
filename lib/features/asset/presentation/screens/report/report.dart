@@ -112,10 +112,10 @@ class Report extends StatelessWidget {
                       height: 193,
                     ),
                     SubmitButton(
-                      color: (state is ReportErrorState) ? kLightBlue : kBlue,
-                      onpressed: (state is ReportErrorState) 
-                      ? null
-                      :issueController.clear,
+                      color: (state is ReportValidState) ? kBlue : kLightBlue,
+                      onpressed: (state is! ReportValidState)
+                          ? null
+                          : issueController.clear,
                     ),
                   ],
                 ),

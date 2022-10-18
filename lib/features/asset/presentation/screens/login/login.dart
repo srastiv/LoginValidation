@@ -103,7 +103,7 @@ class Login extends StatelessWidget {
                     builder: (context, state) {
                       return SubmitButton(
                           onpressed: () {
-                            (state is EmailErrorState || state is PasswordErrorState)
+                                    (state is! LoginValidState)
                                 ? null
                                 : Navigator.push(
                                     context,
@@ -111,9 +111,6 @@ class Login extends StatelessWidget {
                                       builder: (context) => Report(),
                                     ));
                           },
-
-                          // pageToShow:
-                          //     (state is LoginErrorState) ? Login() : Report(),
                           color:
                               (state is LoginValidState) ? kBlue : kLightBlue);
                     },

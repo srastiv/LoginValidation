@@ -7,7 +7,7 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitialState()) {
     on<EmailTextOnChangedEvent>((event, emit) {
-      if (isEmail(event.email) == false) {
+      if (isEmail(event.email) == false || event.email.isEmpty) {
         emit(EmailErrorState(
             errorMessage: "Please enter a valid email address"));
       } else {
@@ -16,7 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
 
     on<PasswordTextOnChangedEvent>((event, emit) {
-      if (validatePassword(event.password) == false) {
+      if (validatePassword(event.password) == false || event.password.isEmpty) {
         emit(PasswordErrorState(errorMessage: "Please enter a valid password"));
         if (event.password.length < 8) {
           emit(PasswordErrorState(

@@ -17,6 +17,5 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     on<SubmitReportFormEvent>((event, emit) {
       emit(ReportLoadingState());
     });
-
   }
 }
