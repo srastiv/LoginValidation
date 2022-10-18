@@ -1,55 +1,64 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitialState()) {
-    on<EmailTextOnChangedEvent>((event, emit) {
-      if (isEmail(event.email) == false || event.email.isEmpty) {
-        emit(EmailErrorState(
-            errorMessage: "Please enter a valid email address"));
-      } else {
-        emit(LoginValidState());
-      }
-    });
+    on<LoginTextOnChangedEvent>((event, emit) {
+      String emailErrorMessage = "Please enter a valid email address";
+      String passwordErroressage = "Please enter a valid password";
+      var emailValidation =
+          (isEmail(event.email) == false || event.email.isEmpty);
+      var passwordValidation =
+          validatePassword(event.password) == false || event.password.isEmpty;
 
-    on<PasswordTextOnChangedEvent>((event, emit) {
-      if (validatePassword(event.password) == false || event.password.isEmpty) {
-        emit(PasswordErrorState(errorMessage: "Please enter a valid password"));
+      if (passwordValidation) {
+        emit(LoginErrorState(
+            passwordErrorMessage: passwordErroressage,
+            emailErrorMessage: emailValidation ? emailErrorMessage : ""));
         if (event.password.length < 8) {
-          emit(PasswordErrorState(
-              errorMessage: "Password should be atleast 8 characters long"));
+          emit(LoginErrorState(
+            passwordErrorMessage:
+                "Password should be atleast 8 characters long",
+            emailErrorMessage: emailValidation ? emailErrorMessage : "",
+          ));
         }
         if (!event.password.contains(RegExp(r'[A-Z]'))) {
-          emit(PasswordErrorState(
-              errorMessage: "Password should contain atleast 1 uppercase"));
+          emit(LoginErrorState(
+            passwordErrorMessage: "Password should contain atleast 1 uppercase",
+            emailErrorMessage: emailValidation ? emailErrorMessage : "",
+          ));
         }
-         if (!event.password.contains(RegExp(r'[a-z]'))) {
-          emit(PasswordErrorState(
-              errorMessage: "Password should contain atleast 1 lowercase"));
+        if (!event.password.contains(RegExp(r'[a-z]'))) {
+          emit(LoginErrorState(
+            passwordErrorMessage: "Password should contain atleast 1 lowercase",
+            emailErrorMessage: emailValidation ? emailErrorMessage : "",
+          ));
         }
         if (!event.password.contains(RegExp(r'[0-9]'))) {
-          emit(PasswordErrorState(
-              errorMessage: "Password should contain atleast 1 digit"));
+          emit(LoginErrorState(
+            passwordErrorMessage: "Password should contain atleast 1 digit",
+            emailErrorMessage: emailValidation ? emailErrorMessage : "",
+          ));
         }
         if (!event.password.contains(RegExp(r'[!@#\$&*~]'))) {
-          emit(PasswordErrorState(
-              errorMessage: "Password should contain atleast 1 special character"));
+          emit(LoginErrorState(
+              passwordErrorMessage:
+                  "Password should contain atleast 1 special character",
+              emailErrorMessage: emailValidation ? emailErrorMessage : ""));
         }
-
+      } else if (emailValidation) {
+        emit(LoginErrorState(
+            emailErrorMessage: emailErrorMessage,
+            passwordErrorMessage:
+                passwordValidation ? passwordErroressage : ""));
       } else {
         emit(LoginValidState());
       }
-    });
-
-    on<SubmitLoginFormEvent>((event, emit) {
-      emit(LoginLoadingState());
     });
   }
 }
-//TODO: DESCRIPTIVE error msgs, regex
 
 bool isEmail(String em) {
   String p =
@@ -66,4 +75,3 @@ bool validatePassword(String value) {
   RegExp regExp = RegExp(pattern);
   return regExp.hasMatch(value);
 }
-

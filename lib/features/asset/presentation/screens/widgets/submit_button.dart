@@ -24,14 +24,6 @@ class _SubmitButtonState extends State<SubmitButton> {
       width: 328,
       child: ElevatedButton(
         onPressed: widget.onpressed,
-        
-        // {
-        //   Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => widget.pageToShow!,
-
-            
-        //   ));
-        // },
         style: ElevatedButton.styleFrom(
           primary: widget.color,
           shape: RoundedRectangleBorder(

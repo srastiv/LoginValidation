@@ -7,14 +7,9 @@ class LoginInitialState extends LoginState {}
 
 class LoginValidState extends LoginState {}
 
-class LoginLoadingState extends LoginState {}
-
-class EmailErrorState extends LoginState {
-  final String errorMessage;
-  EmailErrorState({required this.errorMessage});
-}
-
-class PasswordErrorState extends LoginState {
-  final String errorMessage;
-  PasswordErrorState({required this.errorMessage});
+class LoginErrorState extends LoginState {
+  final String emailErrorMessage;
+  final String passwordErrorMessage;
+  LoginErrorState(
+      {required this.passwordErrorMessage, required this.emailErrorMessage});
 }

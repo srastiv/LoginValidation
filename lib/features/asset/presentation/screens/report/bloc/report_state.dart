@@ -7,8 +7,6 @@ class ReportInitial extends ReportState {}
 
 class ReportValidState extends ReportState {}
 
-class ReportLoadingState extends ReportState {}
-
 class ReportErrorState extends ReportState {
   final String errorMessage;
   ReportErrorState({required this.errorMessage});

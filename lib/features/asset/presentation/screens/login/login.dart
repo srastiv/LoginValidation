@@ -13,7 +13,7 @@ class Login extends StatelessWidget {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
@@ -45,26 +45,26 @@ class Login extends StatelessWidget {
                   EnterDetailsTextField(
                     text: "Please enter your email address",
                     height: 48,
+                    obscuretext: false,
                     controller: emailController,
                     onchange: (value) {
                       BlocProvider.of<LoginBloc>(context).add(
-                        EmailTextOnChangedEvent(
+                        LoginTextOnChangedEvent(
                           email: emailController.text,
+                          password: passwordController.text,
                         ),
                       );
                     },
                   ),
                   BlocBuilder<LoginBloc, LoginState>(
                     builder: (context, state) {
-                      if (state is EmailErrorState) {
+                      if (state is LoginErrorState) {
                         return Text(
-                          state.errorMessage,
+                          state.emailErrorMessage,
                           style: kErrorStyle,
                         );
                       }
-                      return const SizedBox(
-                          // child: Text("wudgvd"),
-                          );
+                      return const SizedBox();
                     },
                   ),
                   const SizedBox(
@@ -78,18 +78,21 @@ class Login extends StatelessWidget {
                     text: "Please enter your password",
                     height: 48,
                     controller: passwordController,
+                    obscuretext: true,
                     onchange: (value) {
                       BlocProvider.of<LoginBloc>(context).add(
-                        PasswordTextOnChangedEvent(
-                            password: passwordController.text),
+                        LoginTextOnChangedEvent(
+                          password: passwordController.text,
+                          email: emailController.text,
+                        ),
                       );
                     },
                   ),
                   BlocBuilder<LoginBloc, LoginState>(
                     builder: (context, state) {
-                      if (state is PasswordErrorState) {
+                      if (state is LoginErrorState) {
                         return Text(
-                          state.errorMessage,
+                          state.passwordErrorMessage,
                           style: kErrorStyle,
                         );
                       }
@@ -103,7 +106,7 @@ class Login extends StatelessWidget {
                     builder: (context, state) {
                       return SubmitButton(
                           onpressed: () {
-                                    (state is! LoginValidState)
+                            (state is! LoginValidState)
                                 ? null
                                 : Navigator.push(
                                     context,

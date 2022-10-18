@@ -3,28 +3,28 @@
 import 'package:asset/features/asset/presentation/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-class EnterDetailsTextField extends StatelessWidget {
+class EnterIssuesTextField extends StatelessWidget {
   int? numberOfLetters;
+  int? maxlines;
   String text;
   double height;
   Widget? dropdownmenu;
   Widget? suffixicon;
-  bool obscuretext;
   TextEditingController controller;
-
   void Function(String) onchange;
 
-  EnterDetailsTextField({
+  EnterIssuesTextField({
     Key? key,
     required this.text,
     required this.height,
     required this.onchange,
     required this.controller,
     this.suffixicon,
-    required this.obscuretext,
     this.dropdownmenu,
     this.numberOfLetters,
+    this.maxlines,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -33,7 +33,7 @@ class EnterDetailsTextField extends StatelessWidget {
         keyboardType: TextInputType.multiline,
         controller: controller,
         onChanged: onchange,
-        obscureText: obscuretext,
+        maxLines: 6,
         maxLength: numberOfLetters,
         decoration: InputDecoration(
           isDense: true,

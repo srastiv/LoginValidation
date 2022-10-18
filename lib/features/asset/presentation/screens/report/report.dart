@@ -1,17 +1,17 @@
 import 'package:asset/features/asset/presentation/constants/colors.dart';
 import 'package:asset/features/asset/presentation/constants/texts.dart';
 import 'package:asset/features/asset/presentation/constants/textstyles.dart';
-import 'package:asset/features/asset/presentation/screens/login/login.dart';
 import 'package:asset/features/asset/presentation/screens/report/bloc/report_bloc.dart';
-import 'package:asset/features/asset/presentation/screens/widgets/textfield.dart';
+import 'package:asset/features/asset/presentation/screens/report/widgets/dropdown_menu2.dart';
+import 'package:asset/features/asset/presentation/screens/report/widgets/issue_textfield.dart';
 import 'package:asset/features/asset/presentation/screens/widgets/submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Report extends StatelessWidget {
   Report({Key? key}) : super(key: key);
-  TextEditingController assetController = TextEditingController();
-  TextEditingController issueController = TextEditingController();
+  final TextEditingController assetController = TextEditingController();
+  final TextEditingController issueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,34 +48,11 @@ class Report extends StatelessWidget {
                       height: 12,
                     ),
                     Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: DropdownButton<String>(
-                        //  borderRadius: BorderRadius.circular(10),
-                        elevation: 0,
-                        icon: const Icon(
-                          Icons.arrow_downward_outlined,
-                          color: kBlack,
+                        width: 350,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        hint: const Text(
-                          "Select Asset",
-                          style: TextStyle(color: kGrey),
-                        ),
-                        items: <String>['Macbook', 'Dell', 'Lenovo', 'Acer']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: const TextStyle(color: kBlack),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                      ),
-                    ),
+                        child: DropDownButtonTwo()),
                     const SizedBox(
                       height: 28,
                     ),
@@ -83,11 +60,10 @@ class Report extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
-                    EnterDetailsTextField(
+                    EnterIssuesTextField(
+                      controller: issueController,
                       text: "Tell us a little more about the issue...",
                       height: 128,
-                      controller: issueController,
-                      numberOfLetters: 300,
                       onchange: (value) {
                         BlocProvider.of<ReportBloc>(context).add(
                             ReportTextOnChangedEvent(
