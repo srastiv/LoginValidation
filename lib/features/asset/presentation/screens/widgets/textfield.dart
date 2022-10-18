@@ -2,8 +2,10 @@
 
 import 'package:asset/features/asset/presentation/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EnterDetailsTextField extends StatelessWidget {
+  int? numberOfLetters;
   String text;
   double height;
   Widget? dropdownmenu;
@@ -17,6 +19,7 @@ class EnterDetailsTextField extends StatelessWidget {
     required this.onchange,
     required this.controller,
     this.dropdownmenu,
+    this.numberOfLetters,
   }) : super(key: key);
 
   @override
@@ -27,6 +30,10 @@ class EnterDetailsTextField extends StatelessWidget {
         controller: controller,
         onChanged: onchange,
         maxLines: 6,
+        maxLength: numberOfLetters,
+        // inputFormatters: [
+        //   LengthLimitingTextInputFormatter(45),
+        // ],
         decoration: InputDecoration(
           isDense: true,
           border: InputBorder.none,

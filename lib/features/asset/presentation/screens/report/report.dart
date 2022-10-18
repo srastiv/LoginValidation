@@ -87,6 +87,7 @@ class Report extends StatelessWidget {
                       text: "Tell us a little more about the issue...",
                       height: 128,
                       controller: issueController,
+                      numberOfLetters: 300,
                       onchange: (value) {
                         BlocProvider.of<ReportBloc>(context).add(
                             ReportTextOnChangedEvent(
